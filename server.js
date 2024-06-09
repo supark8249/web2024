@@ -17,16 +17,29 @@ app.use(express.static(__dirname + '/public'));
 var mongoose = require('mongoose');
 var MongoStore = require('connect-mongo')(session);
 
-mongoose.connect('"mongodb://localhost:27017/web2024?retryWrites=true&w=majority', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}, (err) => {
-  if (!err) {
-    console.log('MongoDB Connection Succeeded.');
-  } else {
-    console.log('Error in DB connection : ' + err);
+// mongoose.connect('mongodb://localhost:27017/web2024?retryWrites=true&w=majority', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// }, (err) => {
+//   if (!err) {
+//     console.log('MongoDB Connection Succeeded.');
+//   } else {
+//     console.log('Error in DB connection : ' + err);
+//   }
+// });
+async function connectToDatabase() {
+  try {
+      await mongoose.connect('mongodb://localhost:27017/web2024', {
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+      });
+      console.log('Connected to MongoDB');
+  } catch (err) {
+      console.error('Failed to connect to MongoDB', err);
   }
-});
+}
+
+connectToDatabase();
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
