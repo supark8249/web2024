@@ -25,6 +25,17 @@ var bid = 0
 
 const visitor = mongoose.model('visitor', visitor_schema);
 
+visitor.find((err, visitors) => {
+    if (err) {
+        console.error(err);
+        return;
+    }
+
+    console.log('검색된 사용자:');
+    console.log(visitors);
+});
+
+
 visitor.findOne({},{},{sort:{'_id':-1}})
 .then(function(post){
 	console.log(post.id);
