@@ -24,16 +24,6 @@ var bid = 0
 
 const visitor = mongoose.model('visitor', visitor_schema);
 
-// (async () => {
-// 	try {
-// 	  const visitors = await visitor.find();
-// 	  console.log('검색된 방문자:', visitors);
-// 	} catch (err) {
-// 	  console.error(err);
-// 	}
-//   })();
-
-
 visitor.findOne({},{},{sort:{'_id':-1}})
 .then(function(post){
 	console.log(post.id);
@@ -58,6 +48,23 @@ router.get('/', function (req, res, next) {
 
 	// return res.render('visitor.ejs', {"visitor":visitor});
 });
+
+app.get('/visitorEdit', async (req, res) => {
+	try {
+	  const bid = parseInt(req.query.bid);
+	  const board = await visitors.findOne({ id: bid });
+  
+	  if (!visitors) {
+		// handle case where board is not found (e.g., send 404 error)
+		return res.status(404).send('visitors not found');
+	  }
+  
+	  res.render("visitorEdit.ejs", {"visitors":visitors});
+	} catch (error) {
+	  console.error(error);
+	  res.status(500).send('Internal Server Error');
+	}
+  });
 
 // 방명록 작성 API (POST)
 app.post('/visitorSave', async (req, res) => {
