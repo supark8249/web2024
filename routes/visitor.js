@@ -25,15 +25,14 @@ var bid = 0
 
 const visitor = mongoose.model('visitor', visitor_schema);
 
-visitor.find((err, visitors) => {
-    if (err) {
-        console.error(err);
-        return;
-    }
-
-    console.log('검색된 사용자:');
-    console.log(visitors);
-});
+(async () => {
+	try {
+	  const visitors = await Visitor.find();
+	  console.log('검색된 방문자:', visitors);
+	} catch (err) {
+	  console.error(err);
+	}
+  })();
 
 
 visitor.findOne({},{},{sort:{'_id':-1}})
