@@ -4,6 +4,7 @@ var User = require('../models/user');
 const path = require("path");
 //const uuid = require("uuid").v4;
 const { v4: uuid} = require("uuid");
+var mongoose = require('mongoose');
 
 const static_path = path.join(__dirname, "./public" );
 console.log("visitor.js");
