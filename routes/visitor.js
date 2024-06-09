@@ -48,9 +48,8 @@ router.get('/', function (req, res, next) {
 router.get('/visitorEdit', async (req, res) => {
 	try {
 		console.log(req.query.vid);
-		console.log(req.query.id);
 		const vid = parseInt(req.query.vid);
-		const visitor = await visitors.findOne({ id: vid });
+		const visitor = await visitor.findOne({ id: vid });
 	
 		if (!visitor) {
 			// handle case where board is not found (e.g., send 404 error)
