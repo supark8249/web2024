@@ -51,14 +51,15 @@
                                     <form method=post commandName="Visitor" name="Visitor">
                                         <div class="d-flex align-items-center" style="margin-left: 20px;margin-top: 10px;">
                                            <div class="p-5">
-                                                아이디 : <%=visitors.id%>
+                                                아이디 : 
+                                                <input type="text" name="id" value="<%=visitors.id%>" size="20" class="input-group" style="border-radius: 3px;" readonly>
                                                 <br><br>
                                                 내용<br>                                           
                                                 <input type="text" name="content" value="<%=visitors.content%>" size="200" class="input-group" style="border-radius: 3px;">
                                                 <br> 
                                                 패스워드<br>                                               
-                                                <input type="password" name="password" value="<%=visitors.password%>" size="20" class="input-group" style="border-radius: 3px;">
-                                                <input type="hidden" name=password_o value="<%=visitors.password%>" size="20">
+                                                <input type="password" name="password" value="<%=visitors.password%>" size="10" class="input-group" style="border-radius: 3px;">
+                                                <input type="hidden" name=password_o value="<%=visitors.password%>" size="10">
                                             </div>
                                         </div>
                                         <!-- <input type="submit" style="float:right; margin-right: 10px; margin-bottom: 5px;">저장</button> -->
