@@ -47,11 +47,9 @@ router.get('/', function (req, res, next) {
 
 router.get('/visitorEdit', async (req, res) => {
 	try {
+		console.log(req.query.vid);
 		console.log(req.query.id);
-		console.log(req.query.password);
-		console.log(req.query.password_o);
-		console.log(req.query.content);
-		const vid = parseInt(req.query.id);
+		const vid = parseInt(req.query.vid);
 		const visitor = await visitors.findOne({ id: vid });
 	
 		if (!visitor) {
