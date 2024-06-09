@@ -7,7 +7,7 @@ var session = require('express-session');
 const rootDir = path.resolve(__dirname, '..');
 
 var index = require('./routes/index');
-// var visitor = require('./routes/visitor');
+var visitor = require('./routes/visitor');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -19,7 +19,7 @@ var MongoStore = require('connect-mongo')(session);
 
 async function connectToDatabase() {
   try {
-      await mongoose.connect('mongodb://localhost:27017/web2024', {
+      await mongoose.connect('mongodb://localhost:27017/mydatabase', {
           useNewUrlParser: true,
           useUnifiedTopology: true,
       });
