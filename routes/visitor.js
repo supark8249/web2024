@@ -7,12 +7,79 @@ const { v4: uuid} = require("uuid");
 
 const static_path = path.join(__dirname, "./public" );
 console.log("visitor.js");
+
 router.get('/', function (req, res, next) {
 	console.log("visitor");
 	return res.render('visitor.ejs');
 });
 
+const visitor_schema = new mongoose.Schema({
+	id: {type: Number, default: 0},
+	content: { type: String },
+ 	password: { type: String },
+ 	createdDt: { type: Date, default: Date.now }
+},{
+	collection: "visitor",
+ 	versionKey: false
+})
 
+var bid = 0
+
+const visitor = mongoose.model('visitor', visitor_schema);
+
+visitor.findOne({},{},{sort:{'_id':-1}})
+.then(function(post){
+	console.log(post.id);
+	bid = post.id
+}).catch(function(post){
+	console.log("visitor is empty");
+	bid = 0
+});
+
+app.get('/visitor', (req, res) => {
+	nfts.find().then((visitor) => {
+	  res.render("visitor.ejs", {"visitor":visitor})
+	})
+  })
+
+
+
+// 방명록 작성 API (POST)
+app.post('/visitorSave', async (req, res) => {
+	const { name, message } = req.body;
+  
+	if (!name || !message) {
+	  return res.status(400).json({ error: 'Name and message are required' });
+	}
+  
+	const newEntry = new Guestbook({ name, message });
+  
+	try {
+	  const savedEntry = await newEntry.save();
+	  res.redirect('/');
+	} catch (err) {
+	  res.status(500).json({ error: 'Failed to save entry' });
+	}
+  });
+  
+  // 방명록 삭제 API (DELETE)
+  app.delete('/visitorDel/:id', async (req, res) => {
+	const { id } = req.params;
+  
+	try {
+	  const deletedEntry = await Guestbook.findByIdAndDelete(id);
+  
+	  if (!deletedEntry) {
+		return res.status(404).json({ error: 'Entry not found' });
+	  }
+  
+	  res.redirect('/');
+	} catch (err) {
+	  res.status(500).json({ error: 'Failed to delete entry' });
+	}
+  });
+
+  
 // router.post('/register', function(req, res, next) {
 // 	console.log(req.body);
 // 	var personInfo = req.body;
