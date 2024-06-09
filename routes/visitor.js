@@ -48,7 +48,7 @@ router.get('/', function (req, res, next) {
 router.get('/visitorEdit', async (req, res) => {
 	try {
 		console.log(req.query.vid);
-		const vid = parseInt(req.query.vid);
+		const vid = (req.query.vid);
 		console.log(vid);
 		const vEdit = await visitor.findOne({ id: vid });
 	
