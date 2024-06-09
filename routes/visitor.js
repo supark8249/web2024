@@ -14,8 +14,7 @@ console.log("visitor.js");
 const visitor_schema = new mongoose.Schema({
 	id: {type: String },
 	content: { type: String },
- 	password: { type: String },
- 	createDt: { type: Date, default: Date.now }
+ 	password: { type: String }
 },{
 	collection: "visitor",
  	versionKey: false
