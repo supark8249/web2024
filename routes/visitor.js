@@ -95,7 +95,7 @@ router.post('/visitorSave', async (req, res) => {
 			{ new: true } // To return the updated document
 		);
   
-		if (!updatedBoard) {
+		if (!updatedVisitor) {
 			return res.status(404).json({
 			status: 'error',
 			error: 'Visitor not found',
