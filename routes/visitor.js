@@ -64,6 +64,54 @@ router.get('/visitorEdit', async (req, res) => {
 	}
 });
 
+app.post('/visitorSave', async (req, res) => {
+	try {
+	  console.log("visitorSave post: ", req.body.id, req.body.content);
+  
+	  const vid = (req.query.vid);
+	  console.log("req.body.id:", req.body.id);
+	  console.log("req.body.content:", req.body.content);
+	  console.log("req.body.password:", req.body.password);
+	  console.log("req.body.password_o:", req.body.password_o);
+  
+	  if (!vid) {
+		return res.status(400).json({
+		  status: 'error',
+		  error: 'vid parameter is missing',
+		});
+	  }
+  
+	  if (req.body.password !== req.body.password_o) {
+		console.log("비밀번호가 틀림");
+		return res.status(400).json({
+		  status: 'error',
+		  error: '비밀번호가 틀림',
+		});
+	  }
+  
+	  const updatedVisitor = await visitor.findOneAndUpdate(
+		{ id: vid },
+		{ $set: { content: req.body.content } },
+		{ new: true } // To return the updated document
+	  );
+  
+	  if (!updatedBoard) {
+		return res.status(404).json({
+		  status: 'error',
+		  error: 'Visitor not found',
+		});
+	  }
+  
+	  res.redirect('/');
+	} catch (error) {
+	  console.error(error);
+	  res.status(500).json({
+		status: 'error',
+		error: 'Internal Server Error',
+	  });
+	}
+  });
+  
 // 방명록 작성 API (POST)
 // app.post('/visitorSave', async (req, res) => {
 // 	const { name, message } = req.body;
