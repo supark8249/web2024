@@ -7,7 +7,7 @@ var session = require('express-session');
 const rootDir = path.resolve(__dirname, '..');
 
 var index = require('./routes/index');
-var visitor = require('./routes/visitor');
+// var visitor = require('./routes/visitor');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -17,16 +17,6 @@ app.use(express.static(__dirname + '/public'));
 var mongoose = require('mongoose');
 var MongoStore = require('connect-mongo')(session);
 
-// mongoose.connect('mongodb://localhost:27017/web2024?retryWrites=true&w=majority', {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true
-// }, (err) => {
-//   if (!err) {
-//     console.log('MongoDB Connection Succeeded.');
-//   } else {
-//     console.log('Error in DB connection : ' + err);
-//   }
-// });
 async function connectToDatabase() {
   try {
       await mongoose.connect('mongodb://localhost:27017/web2024', {
