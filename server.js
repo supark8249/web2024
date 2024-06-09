@@ -14,44 +14,36 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(__dirname + '/public'));
 
-// var mongoose = require('mongoose');
-// var MongoStore = require('connect-mongo')(session);
+var mongoose = require('mongoose');
+var MongoStore = require('connect-mongo')(session);
 
-// mongoose.connect('"mongodb://localhost:27017/web2024?retryWrites=true&w=majority', {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true
-// }, (err) => {
-//   if (!err) {
-//     console.log('MongoDB Connection Succeeded.');
-//   } else {
-//     console.log('Error in DB connection : ' + err);
-//   }
-// });
+mongoose.connect('"mongodb://localhost:27017/web2024?retryWrites=true&w=majority', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}, (err) => {
+  if (!err) {
+    console.log('MongoDB Connection Succeeded.');
+  } else {
+    console.log('Error in DB connection : ' + err);
+  }
+});
 
-// var db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'connection error:'));
-// db.once('open', function () {
-// });
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+});
 
-// app.use(session({
-//   secret: 'ks edu',
-//   resave: true,
-//   saveUninitialized: false,
-//   store: new MongoStore({
-//     mongooseConnection: db
-//   })
-// }));
-
-
+app.use(session({
+  secret: 'ks edu',
+  resave: true,
+  saveUninitialized: false,
+  store: new MongoStore({
+    mongooseConnection: db
+  })
+}));
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');	
-
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: false }));
-
-// app.use(express.static(__dirname + '/public'));
-
 
 app.use('/', index);
 app.use('/visitor', visitor);
@@ -69,7 +61,6 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.send(err.message);
 });
-
 
 const PORT = 8000;
 app.listen(PORT, function () {
