@@ -49,7 +49,7 @@ router.get('/', function (req, res, next) {
 	// return res.render('visitor.ejs', {"visitor":visitor});
 });
 
-app.get('/visitorEdit', async (req, res) => {
+router.get('/visitorEdit', async (req, res) => {
 	try {
 		console.log(req.query.bid);
 		const bid = parseInt(req.query.bid);
