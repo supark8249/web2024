@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>My HomePage</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Custom Google font-->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript">   
+            $(document).ready( function() {
+            
+              $("#lnb").load("/include/lnb.html");  // 상위메뉴
+              $("#footer").load("/include/footer.html");  // footer
+            
+            });
+          </script>          
+    </head>
+    <body class="d-flex flex-column h-100">
+        <main class="flex-shrink-0">
+            <!-- Navigation-->
+            <div id="lnb"></div>
+            <!-- Projects Section-->
+            <section class="py-5">
+                <div class="container px-0 mb-5">
+                    <div class="text-center mb-5">
+                        <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Ajax 예시(jQuery, BackEnd : JAVA)</span></h1>
+                    </div>
+                    <div class="row gx-5 justify-content-center">
+                        <div class="col-lg-11 col-xl-9 col-xxl-8">
+                            <!-- Project Card 1-->
+                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                                <div class="card-body p-0">
+                                    <div class="d-flex align-items-center" style="margin-left: 20px;margin-top: 10px;">
+                                        <div class="p-9">
+                                            <h2 class="fw-bolder">JavaScript부분</h2>
+                                            <ul>
+                                                $.ajax({<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;type : "POST”,<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;url:  url,<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;data : JSON.stringify({ 파라미터 }),<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;dataType: 'json',<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;contentType : "application/json; charset=UTF-8",<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;success: function(data) {<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//성공적으로 요청이 완료되었을때 실행<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;},<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;fail : function(data) {<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//요청이 실패했을때 실행<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;},<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;complete : function(data) {<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//요청 완료 후 실행<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                                                });<br>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Project Card 2-->
+                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                                <div class="card-body p-0">
+                                    <div class="d-flex align-items-center" style="margin-left: 20px;margin-top: 10px;">
+                                        <div class="p-9">
+                                            <h2 class="fw-bolder">Controller</h2>
+                                            <ul>
+                                                @ResponseBody<br>
+                                                @RequestMapping(value = "/selectEndGameAjax.do", method = RequestMethod.POST)<br>
+                                                public Map<String, Object> selectEndGameAjax(@RequestBody  SearchVO vo) 	throws Exception {<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;Map<String, Object> jsonList = new HashMap();<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;List<Map<String,String>> endGame = null; <br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;try {<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endGame = indexService.selectEndGameList(vo);	<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jsonList.put("RESULT_CODE", "0000000");<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jsonList.put("RESULT_MSG", "");<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jsonList.put("endGame", endGame);	<br>	
+                                                &nbsp;&nbsp;&nbsp;&nbsp;} catch(Exception ex) {<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LOGGER.error("IndexController.selectEndGameAjax", ex);			<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jsonList.put("RESULT_CODE", "7000500");<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jsonList.put("RESULT_MSG", "종료경기를 조회하는 중 오류가 발생하였습니다.");<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return jsonList;<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;}		<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;return jsonList;<br>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Project Card 3-->
+                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                                <div class="card-body p-0">
+                                    <div class="d-flex align-items-center" style="margin-left: 20px;margin-top: 10px;">
+                                        <div class="p-9">
+                                            <h2 class="fw-bolder">Service</h2>
+                                            <ul>
+                                                public List<Map<String, String>> selectEndGameList(SearchVO vo){<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;return indexMapper.selectEndGameList(vo);<br>
+                                                }                                                
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Project Card 4-->
+                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                                <div class="card-body p-0">
+                                    <div class="d-flex align-items-center" style="margin-left: 20px;margin-top: 10px;">
+                                        <div class="p-9">
+                                            <h2 class="fw-bolder">Mapper</h2>
+                                            <ul>
+                                                public List<Map<String, String>> selectEndGameList(SearchVO vo);                                                
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Project Card 5-->
+                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                                <div class="card-body p-0">
+                                    <div class="d-flex align-items-center" style="margin-left: 20px;margin-top: 10px;">
+                                        <div class="p-9">
+                                            <h2 class="fw-bolder">XML</h2>
+                                            <ul>
+                                                &lt;select id="selectVisitCnt" parameterType="SearchVO" resultType="String"><br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;SELECT COUNT(*) AS CNT FROM NSI_VISIT_STATC<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;WHERE CPTT_CD = #{gEventCd} <br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;AND PRNT_DT = TO_CHAR(SYSDATE, 'YYYYMMDD') <br>
+                                                &lt;/select><br>
+                                                &lt;insert id="insertVisitCnt" parameterType="SearchVO"><br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;INSERT INTO NSI_VISIT_STATC(CPTT_CD, PRNT_DT, THDD_VISIT_NOP_CUNT, VISIT_SUM_NOP_CUNT, CRE_DTTM, UPD_DTTM)<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;VALUES (<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;#{gEventCd}, TO_CHAR(SYSDATE, 'YYYYMMDD'), 1, 1, TO_CHAR(SYSDATE, 'YYYYMMDDhh24miss'), TO_CHAR(SYSDATE, 'YYYYMMDDhh24miss')<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;)<br>
+                                                &lt;/insert><br>
+                                                &lt;update id="updateVisitCnt" parameterType="SearchVO">	<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;UPDATE NSI_VISIT_STATC SET<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;THDD_VISIT_NOP_CUNT = THDD_VISIT_NOP_CUNT + 1,<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VISIT_SUM_NOP_CUNT  = (SELECT SUM(THDD_VISIT_NOP_CUNT) <br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FROM VISIT_STATC<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHERE CPTT_CD = #{gEventCd})<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;WHERE CPTT_CD 	= #{gEventCd}<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND PRNT_DT	= TO_CHAR(SYSDATE, 'YYYYMMDD') <br>
+                                                &lt;/update>                                                                                              
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <!-- Footer-->
+        <div id="footer"></div>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
