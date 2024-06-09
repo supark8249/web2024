@@ -145,7 +145,7 @@ router.post('/visitorUpdate', async (req, res) => {
 			return res.status(400).json({ message: 'Invalid visitor ID' });
 		}
   
-		const deletedVisitor = await nfts.findOneAndDelete({ id: id });
+		const deletedVisitor = await visitor.findOneAndDelete({ id: id });
 		
 		if (!deletedVisitor) {
 			return res.status(404).json({ message: 'visitor not found' });
