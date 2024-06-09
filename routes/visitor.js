@@ -136,5 +136,28 @@ router.post('/visitorUpdate', async (req, res) => {
 		res.status(500).json({ message: 'Internal Server Error' });
 	  }
   });
+
+  router.post('/visitorDelete', async (req, res) => {
+	try {
+		const id = req.body.id;
+
+		if (!id) {
+			return res.status(400).json({ message: 'Invalid visitor ID' });
+		}
+  
+		const deletedVisitor = await nfts.findOneAndDelete({ id: id });
+		
+		if (!deletedVisitor) {
+			return res.status(404).json({ message: 'visitor not found' });
+		}
+  
+	  	res.status(200).json({ message: 'visitor deleted successfully' });
+		
+		res.redirect("/visitor");
+	} catch (error) {
+	  console.error(error);
+	  res.status(500).json({ message: 'Internal Server Error' });
+	}
+  });
   
 module.exports = router;
