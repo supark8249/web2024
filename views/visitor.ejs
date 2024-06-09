@@ -41,6 +41,7 @@
                             <a href="/visitor/visitorNew" style="font-size: 20px;">신규</a>
                             <% visitors.forEach(list => { %>
                             <!-- Project Card 1-->
+                             <ul>
                                 <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
                                     <div class="card-body p-0">
                                         <div class="d-flex align-items-center" style="margin-left: 20px;margin-top: 10px;">
@@ -53,6 +54,7 @@
                                         <a href="/visitor/visitorEdit?vid=<%=list.id%>" style="float:right; margin-right: 10px;">수정</button>
                                     </div>
                                 </div>
+                            </ul>
                             <% }) %>
                         </div>
                     </div>
