@@ -64,7 +64,7 @@ router.get('/visitorEdit', async (req, res) => {
 	}
 });
 
-app.post('/visitorSave', async (req, res) => {
+router.post('/visitorSave', async (req, res) => {
 	try {
 	  console.log("visitorSave post: ", req.body.id, req.body.content);
   
