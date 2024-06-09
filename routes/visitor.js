@@ -27,7 +27,7 @@ const visitor = mongoose.model('visitor', visitor_schema);
 
 (async () => {
 	try {
-	  const visitors = await Visitor.find();
+	  const visitors = await visitor.find();
 	  console.log('검색된 방문자:', visitors);
 	} catch (err) {
 	  console.error(err);
