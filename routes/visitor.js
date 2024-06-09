@@ -49,14 +49,15 @@ router.get('/visitorEdit', async (req, res) => {
 	try {
 		console.log(req.query.vid);
 		const vid = parseInt(req.query.vid);
-		const visitor = await visitor.findOne({ id: vid });
+		console.log(vid);
+		const vEdit = await visitor.findOne({ id: vid });
 	
-		if (!visitor) {
+		if (!vEdit) {
 			// handle case where board is not found (e.g., send 404 error)
 			return res.status(404).send('visitors not found');
 		}
 	
-		res.render("visitorEdit.ejs", {"visitors":visitor});
+		res.render("visitorEdit.ejs", {"visitors":vEdit});
 	} catch (error) {
 		console.error(error);
 		res.status(500).send('Internal Server Error');
