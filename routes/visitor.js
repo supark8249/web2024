@@ -145,6 +145,14 @@ router.post('/visitorUpdate', async (req, res) => {
 			return res.status(400).json({ message: 'Invalid visitor ID' });
 		}
   
+		if (req.body.password !== req.body.password_o) {
+			console.log("비밀번호가 틀림");
+			return res.status(400).json({
+			status: 'error',
+			error: '비밀번호가 틀림',
+			});
+		}
+		
 		const deletedVisitor = await visitor.findOneAndDelete({ id: id });
 		
 		if (!deletedVisitor) {
