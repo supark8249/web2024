@@ -47,16 +47,19 @@ router.get('/', function (req, res, next) {
 
 router.get('/visitorEdit', async (req, res) => {
 	try {
-		console.log(req.query.bid);
-		const bid = parseInt(req.query.bid);
-		const board = await visitors.findOne({ id: bid });
+		console.log(req.query.id);
+		console.log(req.query.password);
+		console.log(req.query.password_o);
+		console.log(req.query.content);
+		const vid = parseInt(req.query.id);
+		const visitor = await visitors.findOne({ id: vid });
 	
-		if (!visitors) {
+		if (!visitor) {
 			// handle case where board is not found (e.g., send 404 error)
 			return res.status(404).send('visitors not found');
 		}
 	
-		res.render("visitorEdit.ejs", {"visitors":visitors});
+		res.render("visitorEdit.ejs", {"visitors":visitor});
 	} catch (error) {
 		console.error(error);
 		res.status(500).send('Internal Server Error');
