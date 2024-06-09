@@ -15,7 +15,7 @@ const visitor_schema = new mongoose.Schema({
 	id: {type: Number, default: 0},
 	content: { type: String },
  	password: { type: String },
- 	createdDt: { type: Date, default: Date.now }
+ 	createDt: { type: Date, default: Date.now }
 },{
 	collection: "visitor",
  	versionKey: false
@@ -25,14 +25,14 @@ var bid = 0
 
 const visitor = mongoose.model('visitor', visitor_schema);
 
-(async () => {
-	try {
-	  const visitors = await visitor.find();
-	  console.log('검색된 방문자:', visitors);
-	} catch (err) {
-	  console.error(err);
-	}
-  })();
+// (async () => {
+// 	try {
+// 	  const visitors = await visitor.find();
+// 	  console.log('검색된 방문자:', visitors);
+// 	} catch (err) {
+// 	  console.error(err);
+// 	}
+//   })();
 
 
 visitor.findOne({},{},{sort:{'_id':-1}})
@@ -46,15 +46,19 @@ visitor.findOne({},{},{sort:{'_id':-1}})
 
 router.get('/', function (req, res, next) {
 	console.log("visitor");
-	return res.render('visitor.ejs', {"visitor":visitor});
+	
+	(async () => {
+		try {
+		  const visitors = await visitor.find();
+		  console.log('검색된 방문자:', visitors);
+		  return res.render('visitor.ejs', {"visitors":visitors});
+		} catch (err) {
+		  console.error(err);
+		}
+	  })();
+
+	// return res.render('visitor.ejs', {"visitor":visitor});
 });
-// app.get('/visitor', (req, res) => {
-// 	nfts.find().then((visitor) => {
-// 	  res.render("visitor.ejs", {"visitor":visitor})
-// 	})
-//   })
-
-
 
 // 방명록 작성 API (POST)
 app.post('/visitorSave', async (req, res) => {
