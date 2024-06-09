@@ -47,7 +47,7 @@ router.get('/', function (req, res, next) {
 
 router.get('/visitorEdit', async (req, res) => {
 	try {
-		const vid = (req.query.vid);
+		const vid = req.query.vid;
 
 		const vEdit = await visitor.findOne({ id: vid });
 	
@@ -67,7 +67,7 @@ router.post('/visitorSave', async (req, res) => {
 	try {
 	  	console.log("visitorSave post: ", req.body.id, req.body.content);
   
-	  	const vid = (req.query.id);
+	  	const vid = req.query.id;
 	  	console.log("req.body.id:", req.body.id);
 	  	console.log("req.body.vid:", vid);
 	  	console.log("req.body.content:", req.body.content);
