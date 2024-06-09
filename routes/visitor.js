@@ -69,6 +69,7 @@ router.post('/visitorSave', async (req, res) => {
   
 	  	const vid = (req.query.id);
 	  	console.log("req.body.id:", req.body.id);
+	  	console.log("req.body.vid:", vid);
 	  	console.log("req.body.content:", req.body.content);
 	  	console.log("req.body.password:", req.body.password);
 	  	console.log("req.body.password_o:", req.body.password_o);
