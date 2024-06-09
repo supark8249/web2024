@@ -25,10 +25,17 @@
             
             });
 
-            function vSave(){
+            function vUpdate(){
                 var frm = document.Visitor;
                 
-                frm.action = "/visitor/visitorSave";
+                frm.action = "/visitor/visitorUpdate";
+                frm.submit();
+            }
+
+            function vDelete(){
+                var frm = document.Visitor;
+                
+                frm.action = "/visitor/visitorDelete";
                 frm.submit();
             }
           </script>   
@@ -62,9 +69,8 @@
                                                 <input type="hidden" name=password_o value="<%=visitors.password%>" size="10">
                                             </div>
                                         </div>
-                                        <!-- <input type="submit" style="float:right; margin-right: 10px; margin-bottom: 5px;">저장</button> -->
-                                        <a href="javascript:vSave()" style="float:right; margin-right: 10px; margin-bottom: 5px;">저장</button>
-                                        <!-- <input type="button" style="float:right; margin-right: 10px; margin-bottom: 5px;" onclick="/visitor">목록</button> -->
+                                        <a href="javascript:vUpdate()" style="float:right; margin-right: 10px; margin-bottom: 5px;">저장</button>
+                                        <a href="javascript:vDelete()" style="float:right; margin-right: 10px; margin-bottom: 5px;">삭제</button>
                                         <a href="/visitor" style="float:right; margin-right: 10px;">목록</button>
                                     </form>
                                 </div>
