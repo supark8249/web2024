@@ -10,10 +10,6 @@ const app = express();
 const static_path = path.join(__dirname, "./public" );
 console.log("visitor.js");
 
-router.get('/', function (req, res, next) {
-	console.log("visitor");
-	return res.render('visitor.ejs');
-});
 
 const visitor_schema = new mongoose.Schema({
 	id: {type: Number, default: 0},
@@ -38,11 +34,15 @@ visitor.findOne({},{},{sort:{'_id':-1}})
 	bid = 0
 });
 
-app.get('/visitor', (req, res) => {
-	nfts.find().then((visitor) => {
-	  res.render("visitor.ejs", {"visitor":visitor})
-	})
-  })
+router.get('/', function (req, res, next) {
+	console.log("visitor");
+	return res.render('visitor.ejs', {"visitor":visitor});
+});
+// app.get('/visitor', (req, res) => {
+// 	nfts.find().then((visitor) => {
+// 	  res.render("visitor.ejs", {"visitor":visitor})
+// 	})
+//   })
 
 
 
