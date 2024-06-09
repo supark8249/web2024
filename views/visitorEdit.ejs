@@ -40,20 +40,22 @@
                         <div class="col-lg-11 col-xl-9 col-xxl-8">
                             <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
                                 <div class="card-body p-0">
-                                    <div class="d-flex align-items-center" style="margin-left: 20px;margin-top: 10px;">
-                                        <div class="p-5">
-                                            아이디 : <%=visitors.id%>
-                                            <br><br>
-                                            내용<br>                                           
-                                            <input type="text" name="content" value="<%=visitors.content%>" size="200" class="input-group" style="border-radius: 3px;">
-                                            <br> 
-                                            패스워드<br>                                               
-                                            <input type="password" name="password" value="<%=visitors.password%>" size="20" class="input-group" style="border-radius: 3px;">
-                                            <input type="hidden" name=password_o value="<%=visitors.password%>" size=100>
+                                    <form method=post action='/visitor/visitorSave?vid=<%=visitors.id%>'>
+                                        <div class="d-flex align-items-center" style="margin-left: 20px;margin-top: 10px;">
+                                           <div class="p-5">
+                                                아이디 : <%=visitors.id%>
+                                                <br><br>
+                                                내용<br>                                           
+                                                <input type="text" name="content" value="<%=visitors.content%>" size="200" class="input-group" style="border-radius: 3px;">
+                                                <br> 
+                                                패스워드<br>                                               
+                                                <input type="password" name="password" value="<%=visitors.password%>" size="20" class="input-group" style="border-radius: 3px;">
+                                                <input type="hidden" name=password_o value="<%=visitors.password%>" size="20">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <a href="/visitor/visitorSave?vid=<%=visitors.id%>" style="float:right; margin-right: 10px;">수정</button>
-                                    <a href="/visitor" style="float:right; margin-right: 10px;">목록</button>
+                                        <input type="submit" style="float:right; margin-right: 10px;">저장</button>
+                                        <a href="/visitor" style="float:right; margin-right: 10px;">목록</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
