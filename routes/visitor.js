@@ -1,140 +1,71 @@
-var express = require('express');
-var router = express.Router();
-const path = require("path");
+const express = require('express');
+const app = express();
+var ejs = require('ejs');
+var path = require('path');
+var bodyParser = require('body-parser');
+var session = require('express-session');
+const rootDir = path.resolve(__dirname, '..');
+
+var index = require('./routes/index');
+var visitor = require('./routes/visitor');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(express.static(__dirname + '/public'));
+
 var mongoose = require('mongoose');
+var MongoStore = require('connect-mongo')(session);
 
-const static_path = path.join(__dirname, "./public" );
+async function connectToDatabase() {
+  try {
+      await mongoose.connect('mongodb://localhost:27017/web2024', {
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+      });
+      console.log('Connected to MongoDB');
+  } catch (err) {
+      console.error('Failed to connect to MongoDB', err);
+  }
+}
 
-console.log("visitor.js");
+connectToDatabase();
 
-const visitor_schema = new mongoose.Schema({
-	id: {type: String },
-	content: { type: String },
- 	password: { type: String }
-},{
-	collection: "visitor",
- 	versionKey: false
-})
-
-var bid = 0
-
-const visitor = mongoose.model('visitor', visitor_schema);
-
-visitor.findOne({},{},{sort:{'_id':-1}})
-.then(function(post){
-	console.log(post.id);
-	bid = post.id
-}).catch(function(post){
-	console.log("visitor is empty");
-	bid = 0
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
 });
 
-router.get('/', function (req, res, next) {
-	console.log("visitor");
-	
-	(async () => {
-		try {
-		  const visitors = await visitor.find();
-		  console.log('검색된 방문자:', visitors);
-		  return res.render('visitor.ejs', {"visitors":visitors});
-		} catch (err) {
-		  console.error(err);
-		}
-	  })();
+app.use(session({
+  secret: 'ks edu',
+  resave: true,
+  saveUninitialized: false,
+  store: new MongoStore({
+    mongooseConnection: db
+  })
+}));
 
-	// return res.render('visitor.ejs', {"visitor":visitor});
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');	
+
+app.use('/', index);
+app.use('/visitor', visitor);
+
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  var err = new Error('File Not Found');
+  err.status = 404;
+  next(err);
 });
 
-router.get('/visitorNew', function (req, res, next) {
-	console.log("visitorNew");
-
-	return res.render('visitorNew.ejs');
+// error handler
+// define as the last app.use callback
+app.use(function (err, req, res, next) {
+  res.status(err.status || 500);
+  res.send(err.message);
 });
 
-router.get('/visitorEdit', async (req, res) => {
-	console.log("visitorEdit");
-	try {
-		const vid = req.query.vid;
-
-		const vEdit = await visitor.findOne({ id: vid });
-	
-		if (!vEdit) {
-			return res.status(404).send('visitors not found');
-		}
-	
-		res.render("visitorEdit.ejs", {"visitors":vEdit});
-	} catch (error) {
-		console.error(error);
-		res.status(500).send('Internal Server Error');
-	}
+const PORT = 8000;
+app.listen(PORT, function () {
+  console.log('Server is started on http://127.0.0.1:'+PORT);
 });
-
-router.post('/visitorUpdate', async (req, res) => {
-	console.log("visitorUpdate");
-	try {
-	  	console.log("visitorUpdate post: ", req.body.id, req.body.content);
-  
-	  	const vid = req.body.id;
-  
-		if (!vid) {
-			return res.status(400).json({
-			status: 'error',
-			error: 'vid parameter is missing',
-			});
-		}
-  
-		if (req.body.password !== req.body.password_o) {
-			console.log("비밀번호가 틀림");
-			return res.status(400).json({
-			status: 'error',
-			error: '비밀번호가 틀림',
-			});
-		}
-  
-		const updatedVisitor = await visitor.findOneAndUpdate(
-			{ id: vid },
-			{ $set: { content: req.body.content } },
-			{ new: true } // To return the updated document
-		);
-  
-		if (!updatedVisitor) {
-			return res.status(404).json({
-			status: 'error',
-			error: 'Visitor not found',
-			});
-		}
-  
-	  	res.redirect('/visitor');
-	} catch (error) {
-	 	console.error(error);
-	  	res.status(500).json({
-			status: 'error',
-			error: 'Internal Server Error',
-	  	});
-	}
-  });
-  
-
-  router.post('/visitorSave', async (req, res) => {
-	console.log("visitorSave");
-	try {
-		const id = req.body.id;
-		const content = req.body.content;
-		const password = req.body.password;
-	
-		const newVisitor = new visitor({
-		  id: id,
-		  content,
-		  password,
-		});
-	
-		await newVisitor.save();
-	
-		res.redirect("/visitor");
-	  } catch (error) {
-		console.error(error);
-		res.status(500).json({ message: 'Internal Server Error' });
-	  }
-  });
-  
-module.exports = router;
