@@ -1,15 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var User = require('../models/user');
 const path = require("path");
-//const uuid = require("uuid").v4;
-const { v4: uuid} = require("uuid");
 var mongoose = require('mongoose');
-const app = express();
 
 const static_path = path.join(__dirname, "./public" );
-console.log("visitor.js");
 
+console.log("visitor.js");
 
 const visitor_schema = new mongoose.Schema({
 	id: {type: String },
@@ -49,7 +45,7 @@ router.get('/', function (req, res, next) {
 	// return res.render('visitor.ejs', {"visitor":visitor});
 });
 
-router.get('/visitorEdit', async (req, res) => {
+router.get('/visitor/visitorEdit', async (req, res) => {
 	try {
 		console.log(req.query.bid);
 		const bid = parseInt(req.query.bid);
@@ -68,39 +64,39 @@ router.get('/visitorEdit', async (req, res) => {
 });
 
 // 방명록 작성 API (POST)
-app.post('/visitorSave', async (req, res) => {
-	const { name, message } = req.body;
+// app.post('/visitorSave', async (req, res) => {
+// 	const { name, message } = req.body;
   
-	if (!name || !message) {
-	  return res.status(400).json({ error: 'Name and message are required' });
-	}
+// 	if (!name || !message) {
+// 	  return res.status(400).json({ error: 'Name and message are required' });
+// 	}
   
-	const newEntry = new Guestbook({ name, message });
+// 	const newEntry = new Guestbook({ name, message });
   
-	try {
-	  const savedEntry = await newEntry.save();
-	  res.redirect('/');
-	} catch (err) {
-	  res.status(500).json({ error: 'Failed to save entry' });
-	}
-  });
+// 	try {
+// 	  const savedEntry = await newEntry.save();
+// 	  res.redirect('/');
+// 	} catch (err) {
+// 	  res.status(500).json({ error: 'Failed to save entry' });
+// 	}
+//   });
   
-  // 방명록 삭제 API (DELETE)
-  app.delete('/visitorDel/:id', async (req, res) => {
-	const { id } = req.params;
+//   // 방명록 삭제 API (DELETE)
+//   app.delete('/visitorDel/:id', async (req, res) => {
+// 	const { id } = req.params;
   
-	try {
-	  const deletedEntry = await Guestbook.findByIdAndDelete(id);
+// 	try {
+// 	  const deletedEntry = await Guestbook.findByIdAndDelete(id);
   
-	  if (!deletedEntry) {
-		return res.status(404).json({ error: 'Entry not found' });
-	  }
+// 	  if (!deletedEntry) {
+// 		return res.status(404).json({ error: 'Entry not found' });
+// 	  }
   
-	  res.redirect('/');
-	} catch (err) {
-	  res.status(500).json({ error: 'Failed to delete entry' });
-	}
-  });
+// 	  res.redirect('/');
+// 	} catch (err) {
+// 	  res.status(500).json({ error: 'Failed to delete entry' });
+// 	}
+//   });
 
   
 // router.post('/register', function(req, res, next) {
