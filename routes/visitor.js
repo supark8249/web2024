@@ -152,15 +152,13 @@ router.post('/visitorUpdate', async (req, res) => {
 			error: '비밀번호가 틀림',
 			});
 		}
-		
+
 		const deletedVisitor = await visitor.findOneAndDelete({ id: id });
 		
 		if (!deletedVisitor) {
 			return res.status(404).json({ message: 'visitor not found' });
 		}
-  
-	  	res.status(200).json({ message: 'visitor deleted successfully' });
-		
+  		
 		res.redirect("/visitor");
 	} catch (error) {
 	  console.error(error);
