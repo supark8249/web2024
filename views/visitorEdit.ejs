@@ -38,18 +38,17 @@
                     </div>  
                     <div class="row gx-5 justify-content-center">
                         <div class="col-lg-11 col-xl-9 col-xxl-8">
-                            <a href="/" style="font-size: 20px;">신규</a>
                             <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
                                 <div class="card-body p-0">
                                     <div class="d-flex align-items-center" style="margin-left: 20px;margin-top: 10px;">
                                         <div class="p-5">
-                                            아이디
-                                            <input type="text" name="id" value="<%=visitors.id%>" size="20">
+                                            아이디<br>
+                                            <input type="text" name="id" value="<%=visitors.id%>" size="20" class="input-group" style="border-radius: 3px;">
                                             <br><br>
-                                            내용                                                
-                                            <input type="text" name="content" value="<%=visitors.content%>" size="200">
-                                            내용                                                
-                                            <input type="password" name="password" value="<%=visitors.password%>" size="20">
+                                            내용<br>                                           
+                                            <input type="text" name="content" value="<%=visitors.content%>" size="200" class="input-group" style="border-radius: 3px;">
+                                            패스워드                                                
+                                            <input type="password" name="password" value="<%=visitors.password%>" size="20" class="input-group" style="border-radius: 3px;">
                                             <input type="hidden" name=password_o value="<%=visitors.password%>" size=100>
                                         </div>
                                     </div>
